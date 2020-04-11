@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String newDate = format.format(date);
                         Random r = new Random();
 
-                        int n = 10000 + r.nextInt(99999);
+                        int n = 10000 + r.nextInt(99998);
                         String code = String.valueOf(n);
 
                         Intent registerIntent = new Intent(RegisterActivity.this, InviteCodeActivity.class);
