@@ -29,7 +29,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void goToPasswordActivity(View v){
-        dialog.setMessage("Checking email address.");
+        dialog = new ProgressDialog(RegisterActivity.this);
+        dialog.setMessage("Checking email address...");
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(true);
         dialog.show();
         auth.fetchSignInMethodsForEmail(email.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
