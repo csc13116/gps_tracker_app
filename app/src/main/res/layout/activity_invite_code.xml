@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InviteCodeActivity"
+    >
+
+    <TextView
+        android:id="@+id/textView_msg"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="Để xem con bạn trên bản đồ, hãy cài đặt phần mềm cho trẻ và thêm mã này" />
+
+    <TextView
+        android:id="@+id/textView_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_msg"
+        android:layout_centerHorizontal="true"
+        android:text="XXXXX" />
+
+    <TextView
+        android:id="@+id/textView_msg_timelim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_code"
+        android:layout_centerHorizontal="true"
+        android:text="Mã sẽ hết hạng sau 5 phút" />
+</RelativeLayout>

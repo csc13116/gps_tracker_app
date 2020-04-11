@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class PasswordActivity extends AppCompatActivity {
+public class InviteCodeActivity extends AppCompatActivity {
 
     String email;
     EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password);
+        setContentView(R.layout.activity_invite_code);
 
         password = (EditText)findViewById(R.id.txt_password);
         Intent registerIntent = getIntent();
@@ -24,7 +24,7 @@ public class PasswordActivity extends AppCompatActivity {
     }
 
     public void goToNameActivity(View v) {
-        Intent passwordIntent = new Intent(PasswordActivity.this, NameActivity.class);
+        Intent passwordIntent = new Intent(InviteCodeActivity.this, NameActivity.class);
         passwordIntent.putExtra("email", email);
         passwordIntent.putExtra("password", password.getText().toString());
         startActivity(passwordIntent);
