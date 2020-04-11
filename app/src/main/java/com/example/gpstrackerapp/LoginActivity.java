@@ -38,6 +38,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"User login failed!", Toast.LENGTH_LONG).show();
 
             }
-        })
+        });
     }
 }
