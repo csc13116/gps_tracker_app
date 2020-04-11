@@ -42,9 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
                     boolean check = !task.getResult().getSignInMethods().isEmpty();
                     if(!check){
                         // email has not existed yet
-                        Intent myIntent = new Intent(RegisterActivity.this, PasswordActivity.class);
-                        myIntent.putExtra("email", email.getText().toString());
-                        startActivity(myIntent);
+                        Intent registerIntent = new Intent(RegisterActivity.this, PasswordActivity.class);
+                        registerIntent.putExtra("email", email.getText().toString());
+                        startActivity(registerIntent);
                     }else {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "This email is already registered", Toast.LENGTH_LONG).show();
