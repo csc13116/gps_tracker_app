@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1031961549753:android:d9a18a0d81324ad6267468",
+        "mobilesdk_app_id": "1:1031961549753:android:3639154b43250128267468",
         "android_client_info": {
           "package_name": "com.example.gpstrackerapp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1031961549753-r6gloc85u8crbfjg06uk6cap9s9f5jnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gpstrackerapp",
+            "certificate_hash": "ed859d63b8f93fa8e8371a446ade669adad93646"
+          }
+        },
         {
           "client_id": "1031961549753-23csf658f6itvh5n5iuq9vqneuralh4l.apps.googleusercontent.com",
           "client_type": 3
