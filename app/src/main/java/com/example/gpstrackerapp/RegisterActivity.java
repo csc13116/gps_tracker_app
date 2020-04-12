@@ -87,11 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    CreateUser newUser = new CreateUser(email.getText().toString(), password.getText().toString(), code);
-
                     user = auth.getCurrentUser();
                     String userId = user.getUid();
-                    DatabaseReference newRef = reference.push();
+                    CreateUser newUser = new CreateUser(email.getText().toString(), password.getText().toString(), code, userId);
+
+                    //DatabaseReference newRef = reference.push();
+//                    DatabaseReference newRef = reference.child(userId).push();
+                    DatabaseReference newRef = reference.child(userId);
                     newRef.setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
