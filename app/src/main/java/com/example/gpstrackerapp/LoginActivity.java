@@ -3,6 +3,7 @@ package com.example.gpstrackerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -25,9 +26,15 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText)findViewById(R.id.txt_email);
         password = (EditText)findViewById(R.id.txt_password);
         auth = FirebaseAuth.getInstance();
+
+        Intent intent = getIntent();
+        if(intent!=null){
+            email.setText(intent.getStringExtra("email"));
+            password.setText(intent.getStringExtra("password"));
+        }
     }
 
-    public void Login(View v){
+    public void onLogin(View v){
         auth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

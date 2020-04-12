@@ -73,13 +73,10 @@ public class RegisterActivity extends AppCompatActivity {
                         registerIntent.putExtra("password", password.getText().toString());
                         registerIntent.putExtra("code", code);
                         startActivity(registerIntent);
-
-
                     } else {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "This email is already registered", Toast.LENGTH_LONG).show();
                     }
-
                 }
             }
         });
@@ -99,10 +96,8 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                //   dialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "User registered successfully", Toast.LENGTH_LONG).show();
                             } else {
-                                //   dialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "User register failed", Toast.LENGTH_LONG).show();
                             }
                         }
@@ -114,6 +109,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void goToLoginActivity(View view) {
         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+        loginIntent.putExtra("email", email.getText().toString());
+        loginIntent.putExtra("password", password.getText().toString());
         startActivity(loginIntent);
 
     }

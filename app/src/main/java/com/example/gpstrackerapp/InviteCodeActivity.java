@@ -26,7 +26,6 @@ public class InviteCodeActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference;
-    //ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class InviteCodeActivity extends AppCompatActivity {
 
         tvCode = (TextView) findViewById(R.id.textView_code);
         auth = FirebaseAuth.getInstance();
-        // reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         Intent registerIntent = getIntent();
         if (registerIntent != null) {
