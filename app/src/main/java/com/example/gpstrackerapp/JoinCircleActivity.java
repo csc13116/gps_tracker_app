@@ -26,8 +26,7 @@ public class JoinCircleActivity extends AppCompatActivity {
     EditText childName;
     FirebaseAuth auth;
     FirebaseUser user;
-    DatabaseReference reference, currentRef;
-    String currentUserID;
+    DatabaseReference reference;
 
 
     @Override
