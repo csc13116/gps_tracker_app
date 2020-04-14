@@ -3,6 +3,7 @@ package com.example.gpstrackerapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -43,7 +44,7 @@ public class JoinCircleActivity extends AppCompatActivity {
     public void onConnect(View v){
         Query query = reference.orderByChild("code").equalTo(code.getValue());
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -54,11 +55,17 @@ public class JoinCircleActivity extends AppCompatActivity {
                         CreateChild newChild = new CreateChild(childName.getText().toString());
 
                         DatabaseReference newRef = children.child(childName.getText().toString());
+                        final String parentId = userResult.id;
                         newRef.setValue(newChild).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Connect succeeded", Toast.LENGTH_LONG).show();
+                                    reference.onDisconnect();
+                                    Intent nameRelationship = new Intent(JoinCircleActivity.this, NameRelationshipActivity.class);
+                                    nameRelationship.putExtra("childName", childName.getText().toString());
+                                    nameRelationship.putExtra("parentId", parentId);
+                                    startActivity(nameRelationship);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Fail to connect", Toast.LENGTH_LONG).show();
                                 }
@@ -75,6 +82,8 @@ public class JoinCircleActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
+
     }
 }

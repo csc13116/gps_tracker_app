@@ -1,25 +1,41 @@
 package com.example.gpstrackerapp;
 
-public class CreateChild {
-    public CreateChild(){};
+import java.util.Stack;
 
-    public CreateChild(String name) {
-        this.name = name;
-        this.latitude = null;
-        this.longitude = null;
-        this.id = null;
+public class CreateChild {
+    public CreateChild() {
     }
 
     ;
 
-    public CreateChild(String name, String latitude, String longitude, String id) {
+    public CreateChild(String name) {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.id = id;
     }
+
+    ;
+
+    public CreateChild(String name, String latitude, String longitude, String relationship) {
+        this.name = name;
+        this.locations.push(new location(longitude,latitude));
+        this.relationship = relationship;
+    }
+
     public String name;
-    public String latitude;
-    public String longitude;
-    public String id;
+    public String relationship;
+    public Stack locations = new Stack<location>();
+    public class location {
+
+        public location() {
+        }
+
+        ;
+
+        public location(String longtitude, String latitude) {
+            this.latitude = latitude;
+            this.longtitude = longtitude;
+        }
+
+        public String longtitude;
+        public String latitude;
+    }
 }
