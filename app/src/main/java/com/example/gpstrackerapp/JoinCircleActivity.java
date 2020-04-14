@@ -34,56 +34,56 @@ public class JoinCircleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_circle);
-        code = (Pinview)findViewById(R.id.pinView_code);
-        childName = (EditText)findViewById(R.id.txt_childName);
+        code = (Pinview) findViewById(R.id.pinView_code);
+        childName = (EditText) findViewById(R.id.txt_childName);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
     }
 
-    public void onConnect(View v){
+    public void onConnect(View v) {
         Query query = reference.orderByChild("code").equalTo(code.getValue());
+
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     CreateUser userResult = null;
-                    for(DataSnapshot child : dataSnapshot.getChildren()){
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
                         userResult = child.getValue(CreateUser.class);
                         final DatabaseReference children = reference.child(userResult.id).child("Children");
                         CreateChild newChild = new CreateChild(childName.getText().toString());
 
                         DatabaseReference newRef = children.child(childName.getText().toString());
+
                         final String parentId = userResult.id;
                         newRef.setValue(newChild).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Connect succeeded", Toast.LENGTH_LONG).show();
-                                    reference.onDisconnect();
                                     Intent nameRelationship = new Intent(JoinCircleActivity.this, NameRelationshipActivity.class);
                                     nameRelationship.putExtra("childName", childName.getText().toString());
                                     nameRelationship.putExtra("parentId", parentId);
                                     startActivity(nameRelationship);
+                                    finish();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Fail to connect", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Fail to connect", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
 
-        });
 
+        });
     }
 }
