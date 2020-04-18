@@ -1,11 +1,8 @@
 package com.example.gpstrackerapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,27 +14,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterLoginActivity extends AppCompatActivity {
 
     EditText email, password;
 
@@ -58,17 +42,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onRegister(View v) {
-        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(RegisterLoginActivity.this);
         String url = "https://dacnpm-backend.herokuapp.com/auth/register";
         StringRequest register = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterLoginActivity.this, response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, "User register failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterLoginActivity.this, "User register failed", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -83,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 //    public void generateCode(View v) {
-//        dialog = new ProgressDialog(RegisterActivity.this);
+//        dialog = new ProgressDialog(RegisterLoginActivity.this);
 //        dialog.setMessage("Checking email address...");
 //        dialog.setIndeterminate(false);
 //        dialog.setCancelable(true);
@@ -108,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                        code = String.valueOf(n);
 //
 //                        createNewUser();
-//                        Intent registerIntent = new Intent(RegisterActivity.this, InviteCodeActivity.class);
+//                        Intent registerIntent = new Intent(RegisterLoginActivity.this, InviteCodeActivity.class);
 //                        registerIntent.putExtra("email", email.getText().toString());
 //                        registerIntent.putExtra("password", password.getText().toString());
 //                        registerIntent.putExtra("code", code);
@@ -150,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
 //    }
 
     public void onLogin(View view) {
-        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(RegisterLoginActivity.this);
         String url = "https://dacnpm-backend.herokuapp.com/auth/login";
         StringRequest login = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -162,12 +146,12 @@ public class RegisterActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String msg = res.optString("mesage");
-                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterLoginActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterLoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -180,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
         };
         queue.add(login);
 
-//        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+//        Intent loginIntent = new Intent(RegisterLoginActivity.this, LoginActivity.class);
 //        loginIntent.putExtra("email", email.getText().toString());
 //        loginIntent.putExtra("password", password.getText().toString());
 //        startActivity(loginIntent);

@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToRegisterActivity(View v){
-        Intent mainIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        Intent mainIntent = new Intent(MainActivity.this, RegisterLoginActivity.class);
         startActivity(mainIntent);
     }
 
