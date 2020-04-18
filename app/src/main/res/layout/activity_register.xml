@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/textView"
         android:layout_centerHorizontal="true"
-        android:onClick="goToLoginActivity"
+        android:onClick="onLogin"
         android:text="Đăng nhập" />
     <TextView
         android:id="@+id/textView"
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:onClick="generateCode"
+        android:onClick="onRegister"
         android:text="Đăng ký" />
 
     <CheckBox
