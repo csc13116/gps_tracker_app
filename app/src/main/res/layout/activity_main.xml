@@ -3,57 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
     tools:context=".MainActivity">
+
 
     <TextView
         android:id="@+id/TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_centerHorizontal="true"
-        android:text="Chọn loại người dùng của bạn" />
+        android:layout_marginStart="44dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Chọn phân quyền của bạn"
+        android:textColor="#000000"
+        android:textSize="19sp" />
 
+    <RelativeLayout
+        android:id="@+id/ConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TextView"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="44dp">
 
-    <ImageButton
-        android:id="@+id/btn_parents"
-        android:layout_width="108dp"
-        android:layout_height="112dp"
-        android:layout_below="@+id/TextView"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="50dp"
-        android:onClick="goToRegisterActivity"
-        app:srcCompat="@drawable/parents_role" />
+        <ImageButton
+            android:id="@+id/btn_parents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/parents_avatar"
+            android:onClick="goToRegisterActivity" />
 
-    <ImageButton
-        android:id="@+id/btn_children"
-        android:layout_width="108dp"
-        android:layout_height="112dp"
-        android:layout_below="@+id/TextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="59dp"
-        android:onClick="goToEnterCode"
-        app:srcCompat="@drawable/children_role" />
+        <ImageButton
+            android:id="@+id/btn_children"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/children_avatar"
+            android:onClick="goToEnterCode"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            />
 
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/txtv_parent"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_parents"
-        android:layout_marginLeft="90dp"
-        android:layout_alignParentLeft="true"
+        android:layout_below="@id/ConstraintLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_light"
         android:text="Phụ huynh" />
 
     <TextView
-        android:id="@+id/txtv_children"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_children"
-        android:layout_marginRight="90dp"
-        android:layout_alignParentRight="true"
+        android:layout_below="@id/ConstraintLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_light"
         android:text="Con trẻ" />
+
 </RelativeLayout>
