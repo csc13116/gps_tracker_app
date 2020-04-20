@@ -3,6 +3,7 @@ package com.example.gpstrackerapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterLoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText email, password;
 
@@ -34,40 +35,40 @@ public class RegisterLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.txt_email);
         password = (EditText) findViewById(R.id.txt_password);
 //      auth = FirebaseAuth.getInstance();
 
     }
 
-    public void onRegister(View v) {
-        RequestQueue queue = Volley.newRequestQueue(RegisterLoginActivity.this);
-        String url = "https://dacnpm-backend.herokuapp.com/auth/register";
-        StringRequest register = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(RegisterLoginActivity.this, response, Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterLoginActivity.this, "User register failed", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", email.getText().toString().split("@")[0]);
-                params.put("password", password.getText().toString());
-                return params;
-            }
-        };
-        queue.add(register);
-    }
+//    public void onRegister(View v) {
+//        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+//        String url = "https://dacnpm-backend.herokuapp.com/auth/register";
+//        StringRequest register = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(LoginActivity.this, "User register failed", Toast.LENGTH_SHORT).show();
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("username", email.getText().toString().split("@")[0]);
+//                params.put("password", password.getText().toString());
+//                return params;
+//            }
+//        };
+//        queue.add(register);
+//    }
 
 //    public void generateCode(View v) {
-//        dialog = new ProgressDialog(RegisterLoginActivity.this);
+//        dialog = new ProgressDialog(RegisterActivity.this);
 //        dialog.setMessage("Checking email address...");
 //        dialog.setIndeterminate(false);
 //        dialog.setCancelable(true);
@@ -92,7 +93,7 @@ public class RegisterLoginActivity extends AppCompatActivity {
 //                        code = String.valueOf(n);
 //
 //                        createNewUser();
-//                        Intent registerIntent = new Intent(RegisterLoginActivity.this, InviteCodeActivity.class);
+//                        Intent registerIntent = new Intent(RegisterActivity.this, InviteCodeActivity.class);
 //                        registerIntent.putExtra("email", email.getText().toString());
 //                        registerIntent.putExtra("password", password.getText().toString());
 //                        registerIntent.putExtra("code", code);
@@ -134,7 +135,7 @@ public class RegisterLoginActivity extends AppCompatActivity {
 //    }
 
     public void onLogin(View view) {
-        RequestQueue queue = Volley.newRequestQueue(RegisterLoginActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
         String url = "https://dacnpm-backend.herokuapp.com/auth/login";
         StringRequest login = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -146,12 +147,12 @@ public class RegisterLoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String msg = res.optString("mesage");
-                Toast.makeText(RegisterLoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterLoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -164,10 +165,15 @@ public class RegisterLoginActivity extends AppCompatActivity {
         };
         queue.add(login);
 
-//        Intent loginIntent = new Intent(RegisterLoginActivity.this, LoginActivity.class);
+//        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
 //        loginIntent.putExtra("email", email.getText().toString());
 //        loginIntent.putExtra("password", password.getText().toString());
 //        startActivity(loginIntent);
 
+    }
+
+    public void goToRegister(View view){
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 }
