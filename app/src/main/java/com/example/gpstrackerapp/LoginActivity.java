@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,7 +28,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, password;
-
+    TextView message;
     ProgressDialog dialog;
     String code;
 //    FirebaseUser user;
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.txt_email);
         password = (EditText) findViewById(R.id.txt_password);
+        message = (TextView) findViewById(R.id.txtV_msg);
 //      auth = FirebaseAuth.getInstance();
 
     }
@@ -135,24 +139,29 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
     public void onLogin(View view) {
+
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
         String url = "https://dacnpm-backend.herokuapp.com/auth/login";
         StringRequest login = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                JSONObject res = null;
-                try {
-                    res = new JSONObject(response);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String msg = res.optString("mesage");
-                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                JSONObject res = null;
+//                try {
+//                    res = new JSONObject(response);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                String msg = res.optString("mesage");
+//                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null && networkResponse.data != null) {
+                    String jsonError = new String(networkResponse.data);
+                    message.setText(jsonError);
+                }
             }
         }) {
             @Override

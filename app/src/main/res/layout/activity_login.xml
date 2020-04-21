@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_alignParentTop="true"
-        android:layout_marginTop="389dp"
+        android:layout_marginTop="375dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,8 +23,8 @@
             android:background="@drawable/input_field"
             android:fontFamily="@font/roboto_light"
             android:hint="Email"
-            android:textSize="18dp"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/txt_password"
@@ -33,22 +33,31 @@
             android:background="@drawable/input_field"
             android:fontFamily="@font/roboto_light"
             android:hint="Mật khẩu"
-            android:textSize="18dp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="14dp" />
 
+        <TextView
+            android:id="@+id/txtV_msg"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/red"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="13dp"
+            android:gravity="center"/>
         <Button
             android:id="@+id/btn_login"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/button"
             android:fontFamily="@font/roboto_medium"
+            android:onClick="onLogin"
             android:text="Đăng nhập"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="18dp"
-            android:onClick="onLogin"
-            android:layout_gravity="center_horizontal"/>
+            android:textSize="18dp" />
 
     </LinearLayout>
 
@@ -56,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <TextView
