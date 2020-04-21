@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToEnterCode(View v){
-        Intent mainIntent = new Intent(MainActivity.this, JoinCircleActivity.class);
+        Intent mainIntent = new Intent(MainActivity.this, EnterCodeActivity.class);
         startActivity(mainIntent);
     }
 }
