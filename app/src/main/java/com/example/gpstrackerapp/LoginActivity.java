@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 //                if (task.isSuccessful()) {
 //                    user = auth.getCurrentUser();
 //                    String userId = user.getUid();
-//                    CreateUser newUser = new CreateUser(email.getText().toString(), password.getText().toString(), code, userId);
+//                    User newUser = new User(email.getText().toString(), password.getText().toString(), code, userId);
 //
 //                    //DatabaseReference newRef = reference.push();
 ////                    DatabaseReference newRef = reference.child(userId).push();

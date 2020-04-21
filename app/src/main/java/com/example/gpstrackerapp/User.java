@@ -1,12 +1,12 @@
 package com.example.gpstrackerapp;
 
-public class CreateUser {
-    public CreateUser() {
+public class User {
+    public User() {
     }
 
     ;
 
-    public CreateUser(String email, String password, String code, String id) {
+    public User(String email, String password, String code, String id) {
         this.email = email;
         this.password = password;
         this.code = code;

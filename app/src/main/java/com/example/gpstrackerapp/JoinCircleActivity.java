@@ -49,11 +49,11 @@ public class JoinCircleActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    CreateUser userResult = null;
+                    User userResult = null;
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        userResult = child.getValue(CreateUser.class);
+                        userResult = child.getValue(User.class);
                         final DatabaseReference children = reference.child(userResult.id).child("Children");
-                        CreateChild newChild = new CreateChild(childName.getText().toString());
+                        Child newChild = new Child(childName.getText().toString());
 
                         DatabaseReference newRef = children.child(childName.getText().toString());
 

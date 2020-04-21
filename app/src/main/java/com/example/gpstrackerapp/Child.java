@@ -2,19 +2,19 @@ package com.example.gpstrackerapp;
 
 import java.util.Stack;
 
-public class CreateChild {
-    public CreateChild() {
+public class Child {
+    public Child() {
     }
 
     ;
 
-    public CreateChild(String name) {
+    public Child(String name) {
         this.name = name;
     }
 
     ;
 
-    public CreateChild(String name, String latitude, String longitude, String relationship) {
+    public Child(String name, String latitude, String longitude, String relationship) {
         this.name = name;
         this.locations.push(new location(longitude,latitude));
         this.relationship = relationship;
