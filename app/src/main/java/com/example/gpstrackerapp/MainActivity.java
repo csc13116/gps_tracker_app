@@ -15,12 +15,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToRegisterActivity(View v){
-        Intent mainIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(mainIntent);
     }
 
     public void goToEnterCode(View v){
-        Intent mainIntent = new Intent(MainActivity.this, JoinCircleActivity.class);
+        Intent mainIntent = new Intent(MainActivity.this, EnterCodeActivity.class);
         startActivity(mainIntent);
     }
 }
