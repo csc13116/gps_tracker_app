@@ -145,6 +145,9 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest login = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+                Intent homepage = new Intent(LoginActivity.this, HomePageActivity.class);
+                startActivity(homepage);
 //                JSONObject res = null;
 //                try {
 //                    res = new JSONObject(response);

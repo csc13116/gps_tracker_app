@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.goodiebag.pinview.Pinview;
+import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class EnterCodeActivity extends AppCompatActivity {
 
-    Pinview code;
+    PinView code;
     // EditText childName;
     FirebaseAuth auth;
     FirebaseUser user;
@@ -34,7 +34,7 @@ public class EnterCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_code);
-        code = (Pinview) findViewById(R.id.pinView_code);
+        code = (PinView) findViewById(R.id.pinView_code);
         // childName = (EditText) findViewById(R.id.txt_childName);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -42,7 +42,7 @@ public class EnterCodeActivity extends AppCompatActivity {
     }
 
     public void onConnect(View v) {
-        Query query = reference.orderByChild("code").equalTo(code.getValue());
+        Query query = reference.orderByChild("code").equalTo(code.getText().toString());
 
 
         query.addValueEventListener(new ValueEventListener() {
