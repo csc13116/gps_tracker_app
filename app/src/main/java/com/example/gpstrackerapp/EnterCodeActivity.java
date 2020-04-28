@@ -1,88 +1,74 @@
 package com.example.gpstrackerapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Button;
 
-import com.chaos.view.PinView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import com.goodiebag.pinview.Pinview;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 
 public class EnterCodeActivity extends AppCompatActivity {
 
-    PinView code;
-    // EditText childName;
-    FirebaseAuth auth;
-    FirebaseUser user;
-    DatabaseReference reference;
-
+    private Socket mSocket;
+    Pinview connectionCode;
+    Button btnChildConnect;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_code);
-        code = (PinView) findViewById(R.id.pinView_code);
-        // childName = (EditText) findViewById(R.id.txt_childName);
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        connectionCode = findViewById(R.id.pinView_code);
+        btnChildConnect = findViewById(R.id.btn_connect);
+
+        try {
+            mSocket = IO.socket("https://dacnpm-backend.herokuapp.com/connect");
+            mSocket.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        btnChildConnect.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String inputCode = connectionCode.toString();
+                mSocket.emit("child wait", inputCode);
+            }
+        });
+
+        mSocket.on("found", onFoundConnect);
     }
 
-    public void onConnect(View v) {
-        Query query = reference.orderByChild("code").equalTo(code.getText().toString());
-
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    User userResult = null;
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        userResult = child.getValue(User.class);
-                        final DatabaseReference children = reference.child(userResult.id).child("Children");
-                        // Child newChild = new Child(childName.getText().toString());
-
-                        // DatabaseReference newRef = children.child(childName.getText().toString());
-
-                        final String parentId = userResult.id;
-//                        newRef.setValue(newChild).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()) {
-//                                    Toast.makeText(getApplicationContext(), "Connect succeeded", Toast.LENGTH_LONG).show();
-//                                    Intent nameRelationship = new Intent(EnterCodeActivity.this, NameRelationshipActivity.class);
-//                                    nameRelationship.putExtra("childName", childName.getText().toString());
-//                                    nameRelationship.putExtra("parentId", parentId);
-//                                    startActivity(nameRelationship);
-//                                    finish();
-//                                } else {
-//                                    Toast.makeText(getApplicationContext(), "Fail to connect", Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
+    private Emitter.Listener onFoundConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject object = (JSONObject) args[0];
+                    try {
+                        String childID = object.getString("connect");
+                        onBothPartiesConnect();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Fail to connect", Toast.LENGTH_LONG).show();
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+            });
+        }
+    };
 
-
-        });
+    public void onBothPartiesConnect() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 }
