@@ -61,16 +61,6 @@
             android:textSize="50dp"
             android:textStyle="bold" />
 
-        <Button
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/button"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:layout_margin="20dp"
-            android:background="@drawable/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xác nhận" />
 
 
     </LinearLayout>
