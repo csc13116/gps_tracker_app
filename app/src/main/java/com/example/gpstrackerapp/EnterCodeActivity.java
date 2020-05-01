@@ -15,6 +15,7 @@ import com.goodiebag.pinview.Pinview;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.net.URISyntaxException;
 
 public class EnterCodeActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class EnterCodeActivity extends AppCompatActivity {
 
         btnChildConnect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String inputCode = connectionCode.toString();
+                String inputCode = connectionCode.getValue();
                 mSocket.emit("child wait", inputCode);
             }
         });
