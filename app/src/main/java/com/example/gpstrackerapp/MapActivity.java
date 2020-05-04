@@ -1,9 +1,15 @@
 package com.example.gpstrackerapp;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -28,7 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public double longitude;
     public String targetName;
 
-    @Override
+    /*
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -38,6 +44,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         targetName = getIntent().getStringExtra("CHILD_NAME");
+    }
+    */
+
+    /*
+    public MapActivity() {
+    }
+
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        if (mapFragment == null) {
+            getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
+        }
+        //targetName = getActivity().getIntent().getStringExtra("CHILD_NAME");
+        mapFragment.getMapAsync(this);
+
+        if (getArguments() != null) {
+            targetName = getArguments().getString("CHILD_NAME");
+        }
+    }
+    */
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mView = inflater.inflate(R.layout.activity_maps, container, false);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        if (mapFragment == null) {
+            getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
+        }
+        //targetName = getActivity().getIntent().getStringExtra("CHILD_NAME");
+        if (getArguments() != null) {
+            targetName = getArguments().getString("CHILD_NAME");
+        }
+        mapFragment.getMapAsync(this);
+
+        return mView;
     }
 
 
@@ -52,7 +97,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
 
     public void getRequestQueueForMap() {
-        RequestQueue requestQueue;
         String urlRequest = "https://dacnpm-backend.herokuapp.com/users/5e92c0641c9d44000027dae1/getchildrenping";
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, urlRequest, null,
                 new Response.Listener<JSONObject>() {
@@ -70,7 +114,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MapsActivity.this, "Can not get coordinates !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Can not get coordinates !", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(LocationFragment.this, "Can not get coordinates !", Toast.LENGTH_LONG).show();
                     }
                 }
         );

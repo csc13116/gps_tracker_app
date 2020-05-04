@@ -15,7 +15,6 @@ import com.goodiebag.pinview.Pinview;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.net.URISyntaxException;
 
 public class EnterCodeActivity extends AppCompatActivity {
@@ -69,7 +68,7 @@ public class EnterCodeActivity extends AppCompatActivity {
     };
 
     public void onBothPartiesConnect() {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 }
