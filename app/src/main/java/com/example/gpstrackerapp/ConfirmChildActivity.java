@@ -6,6 +6,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import java.util.Map;
+
+import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
+import static java.security.AccessController.getContext;
 
 public class ConfirmChildActivity extends AppCompatActivity {
 
@@ -24,9 +31,19 @@ public class ConfirmChildActivity extends AppCompatActivity {
         btnChildConfirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String childName = etNameChild.getText().toString();
-                Intent intent = new Intent(ConfirmChildActivity.this, MapsActivity.class);
-                intent.putExtra("CHILD_NAME", childName);
-                startActivity(intent);
+                //Intent intent = new Intent(ConfirmChildActivity.this, HomePageActivity.class);
+                //intent.putExtra("LOAD_MENU_ITEM", "loadMapFragment");
+                //Intent returnIntent = new Intent();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("CHILD_NAME", childName);
+                Fragment mapActivity = new MapActivity();
+                mapActivity.setArguments(bundle);
+
+                setResult(LAUNCH_MAP);
+                finish();
+                //intent.putExtra("CHILD_NAME", childName);
+                //startActivity(intent);
             }
         });
 

@@ -1,11 +1,19 @@
 package com.example.gpstrackerapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.gpstrackerapp.ui.AccountFragment;
 import com.example.gpstrackerapp.ui.HistoryFragment;
@@ -14,9 +22,10 @@ import com.example.gpstrackerapp.ui.MessageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends FragmentActivity {
 
     BottomNavigationView bottomNavigationView;
+    public static final int LAUNCH_MAP = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +35,7 @@ public class HomePageActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new LocationFragment()).commit();
-
+            HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new LocationFragment()).commit();
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,10 +57,16 @@ public class HomePageActivity extends AppCompatActivity {
                         fragment=new AccountFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
+
+                HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
                 return true;
             }
         });
+    }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
+
+
