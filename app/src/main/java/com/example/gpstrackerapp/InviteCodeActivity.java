@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
+import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
+
 public class InviteCodeActivity extends AppCompatActivity {
 
     private Socket mSocket;
@@ -80,7 +82,13 @@ public class InviteCodeActivity extends AppCompatActivity {
 
     public void confirmChildScreen() {
         Intent intent = new Intent(this, ConfirmChildActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, LAUNCH_MAP);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        setResult(LAUNCH_MAP);
+        finish();
     }
 
     @Override
