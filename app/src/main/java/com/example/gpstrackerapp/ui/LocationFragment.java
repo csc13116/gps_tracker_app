@@ -24,6 +24,7 @@ import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
 
 public class LocationFragment extends Fragment {
     FloatingActionButton create_child_button;
+    String childName;
 
     @Nullable
     @Override
@@ -41,7 +42,19 @@ public class LocationFragment extends Fragment {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MapActivity()).commit();
+
+        if (data != null) {
+            childName = data.getStringExtra("CHILD_NAME");
+            Toast.makeText(getActivity(), childName, Toast.LENGTH_LONG).show();
+            MapActivity mapActivityFragment = new MapActivity();
+            Bundle bundleToFragment = new Bundle();
+            bundleToFragment.putString("CHILD_NAME_FOR_MAP", childName);
+            mapActivityFragment.setArguments(bundleToFragment);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, mapActivityFragment).commit();
+        }
+        else {
+            Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

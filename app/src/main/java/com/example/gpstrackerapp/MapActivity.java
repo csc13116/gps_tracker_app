@@ -48,10 +48,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
     */
 
     /*
-    public MapActivity() {
-    }
-
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -76,10 +72,21 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         if (mapFragment == null) {
             getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
         }
-        //targetName = getActivity().getIntent().getStringExtra("CHILD_NAME");
-        if (getArguments() != null) {
-            targetName = getArguments().getString("CHILD_NAME");
+
+
+        Bundle bundle = this.getArguments();
+
+        if (bundle != null) {
+            targetName = bundle.getString("CHILD_NAME_FOR_MAP");
+            Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
         }
+        else {
+            Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
+        }
+
+        //targetName = getActivity().getIntent().getStringExtra("CHILD_NAME");
+        //targetName = this.getArguments().getString("CHILD_NAME");
+
         mapFragment.getMapAsync(this);
 
         return mView;
@@ -115,7 +122,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getActivity(), "Can not get coordinates !", Toast.LENGTH_LONG).show();
-                        //Toast.makeText(LocationFragment.this, "Can not get coordinates !", Toast.LENGTH_LONG).show();
                     }
                 }
         );
