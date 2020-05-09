@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.gpstrackerapp.ui.LocationFragment;
 
 import java.util.Map;
 
@@ -27,23 +30,13 @@ public class ConfirmChildActivity extends AppCompatActivity {
         etNameChild =  findViewById(R.id.et_childName);
         btnChildConfirm = findViewById(R.id.btn_confirmChild);
 
-
         btnChildConfirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String childName = etNameChild.getText().toString();
-                //Intent intent = new Intent(ConfirmChildActivity.this, HomePageActivity.class);
-                //intent.putExtra("LOAD_MENU_ITEM", "loadMapFragment");
-                //Intent returnIntent = new Intent();
+                Intent intentToMap = new Intent();
+                intentToMap.putExtra("CHILD_NAME", etNameChild.getText().toString());
 
-                Bundle bundle = new Bundle();
-                bundle.putString("CHILD_NAME", childName);
-                Fragment mapActivity = new MapActivity();
-                mapActivity.setArguments(bundle);
-
-                setResult(LAUNCH_MAP);
+                setResult(LAUNCH_MAP, intentToMap);
                 finish();
-                //intent.putExtra("CHILD_NAME", childName);
-                //startActivity(intent);
             }
         });
 
