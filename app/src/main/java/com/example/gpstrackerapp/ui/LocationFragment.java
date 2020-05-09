@@ -45,11 +45,12 @@ public class LocationFragment extends Fragment {
 
         if (data != null) {
             childName = data.getStringExtra("CHILD_NAME");
-            Toast.makeText(getActivity(), childName, Toast.LENGTH_LONG).show();
+
             MapActivity mapActivityFragment = new MapActivity();
             Bundle bundleToFragment = new Bundle();
             bundleToFragment.putString("CHILD_NAME_FOR_MAP", childName);
             mapActivityFragment.setArguments(bundleToFragment);
+
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment, mapActivityFragment).commit();
         }
         else {

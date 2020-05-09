@@ -33,36 +33,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
     public double latitude;
     public double longitude;
     public String targetName;
-
-    /*
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        targetName = getIntent().getStringExtra("CHILD_NAME");
-    }
-    */
-
-    /*
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
-        if (mapFragment == null) {
-            getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
-        }
-        //targetName = getActivity().getIntent().getStringExtra("CHILD_NAME");
-        mapFragment.getMapAsync(this);
-
-        if (getArguments() != null) {
-            targetName = getArguments().getString("CHILD_NAME");
-        }
-    }
-    */
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,14 +49,11 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
 
         if (bundle != null) {
             targetName = bundle.getString("CHILD_NAME_FOR_MAP");
-            Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
         }
-
-        //targetName = getActivity().getIntent().getStringExtra("CHILD_NAME");
-        //targetName = this.getArguments().getString("CHILD_NAME");
 
         mapFragment.getMapAsync(this);
 
