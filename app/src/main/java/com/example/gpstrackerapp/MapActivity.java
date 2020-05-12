@@ -33,7 +33,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
     public double latitude;
     public double longitude;
     public String targetName;
-    
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         }
 
         mapFragment.getMapAsync(this);
-
+        //setRetainInstance(true);
         return mView;
     }
 
