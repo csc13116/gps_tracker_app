@@ -2,7 +2,6 @@ package com.example.gpstrackerapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -28,7 +27,7 @@ public class HomePageActivity extends FragmentActivity {
     public static final int LAUNCH_MAP = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
@@ -42,11 +41,17 @@ public class HomePageActivity extends FragmentActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;
-
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_location:
-                        fragment = new LocationFragment();
-                        break;
+                        if (HomePageActivity.this.getFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") == null) {
+                            fragment = new MapActivity();
+                            break;
+                        }
+                        else {
+                            MapActivity mapActivityFragment = (MapActivity) HomePageActivity.this.getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
+                            HomePageActivity.this.getSupportFragmentManager().beginTransaction().show(mapActivityFragment);
+                            break;
+                        }
                     case R.id.navigation_message:
                         fragment= new MessageFragment();
                         break;
@@ -57,15 +62,11 @@ public class HomePageActivity extends FragmentActivity {
                         fragment=new AccountFragment();
                         break;
                 }
-
                 HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
+
                 return true;
             }
         });
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 
