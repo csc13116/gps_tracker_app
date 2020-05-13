@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,26 +44,33 @@ public class HomePageActivity extends FragmentActivity {
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_location:
-                        if (HomePageActivity.this.getFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") == null) {
-                            fragment = new MapActivity();
+                        if (getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") == null) {
+                            fragment = new LocationFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                             break;
                         }
                         else {
-                            MapActivity mapActivityFragment = (MapActivity) HomePageActivity.this.getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
-                            HomePageActivity.this.getSupportFragmentManager().beginTransaction().show(mapActivityFragment);
+                            MapActivity mapActivityFragment = (MapActivity) getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.detach(mapActivityFragment);
+                            ft.attach(mapActivityFragment);
+                            ft.commit();
+
                             break;
                         }
                     case R.id.navigation_message:
                         fragment= new MessageFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_history:
                         fragment= new HistoryFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_account:
                         fragment=new AccountFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                 }
-                HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
 
                 return true;
             }
