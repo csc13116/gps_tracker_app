@@ -52,12 +52,12 @@ public class LocationFragment extends Fragment {
             bundleToFragment.putString("CHILD_NAME_FOR_MAP", childName);
             mapActivityFragment.setArguments(bundleToFragment);
 
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, mapActivityFragment, "MAP_ACTIVITY_FRAGMENT");
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.fragment, mapActivityFragment, "MAP_ACTIVITY_FRAGMENT");
             ft.addToBackStack("MAP_ACTIVITY_FRAGMENT");
             ft.commit();
 
-            getFragmentManager().executePendingTransactions();
+            getActivity().getSupportFragmentManager().executePendingTransactions();
         }
     }
 
