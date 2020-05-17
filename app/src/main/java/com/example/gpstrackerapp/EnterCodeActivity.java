@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -68,7 +69,7 @@ public class EnterCodeActivity extends AppCompatActivity {
     };
 
     public void onBothPartiesConnect() {
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, ChildHomePageActivity.class);
         startActivity(intent);
     }
 }
