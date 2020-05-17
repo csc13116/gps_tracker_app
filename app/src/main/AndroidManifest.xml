@@ -33,6 +33,9 @@
         <activity
             android:name=".HomePageActivity"/>
 
+        <activity
+            android:name=".ChildHomePageActivity"/>
+
         <activity android:name=".NameRelationshipActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

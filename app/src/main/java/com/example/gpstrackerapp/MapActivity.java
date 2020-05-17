@@ -52,7 +52,8 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
             //Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
+            targetName = "Bạn đang ở đây";
         }
 
         mapFragment.getMapAsync(this);
