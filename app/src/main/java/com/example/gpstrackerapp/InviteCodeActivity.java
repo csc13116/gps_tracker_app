@@ -1,47 +1,102 @@
 package com.example.gpstrackerapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+
+import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
 
 public class InviteCodeActivity extends AppCompatActivity {
 
-    String email, password, code;
+    private Socket mSocket;
     TextView tvCode;
-    FirebaseAuth auth;
-    FirebaseUser user;
-    DatabaseReference reference;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_code);
 
         tvCode = (TextView) findViewById(R.id.textView_code);
-        auth = FirebaseAuth.getInstance();
 
-        Intent registerIntent = getIntent();
-        if (registerIntent != null) {
-            email = registerIntent.getStringExtra("email");
-            password = registerIntent.getStringExtra("password");
-            code = registerIntent.getStringExtra("code");
-            tvCode.setText(code);
+        try {
+            mSocket = IO.socket("https://dacnpm-backend.herokuapp.com/connect");
+            mSocket.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
+
+        mSocket.emit("parent wait", "5e932814d26d1d1d9c5cd034"); //Fixed ID for testing: 5e932814d26d1d1d9c5cd034, otherwise, change to userId
+        mSocket.on("wait connect", onWaitConnect);
+
+        mSocket.on("child connect", onChildConnect);
+    }
+
+    private Emitter.Listener onWaitConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject object = (JSONObject) args[0];
+                    try {
+                        String code = object.getString("connectionString");
+                        tvCode.setText(code);
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onChildConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject object = (JSONObject) args[0];
+                    try {
+                        String childID = object.getString("connect");
+                        confirmChildScreen(); //Enable once child-side is completed
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
+
+    public void confirmChildScreen() {
+        Intent intent = new Intent(this, ConfirmChildActivity.class);
+        startActivityForResult(intent, LAUNCH_MAP);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        setResult(LAUNCH_MAP, data);
+        finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSocket.disconnect();
+        mSocket.off("Disconnect from Socket Server!");
     }
 }
 
