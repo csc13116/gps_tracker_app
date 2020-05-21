@@ -18,7 +18,6 @@ import java.net.URISyntaxException;
 import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
 
 public class InviteCodeActivity extends AppCompatActivity {
-
     private Socket mSocket;
     TextView tvCode;
 
@@ -52,8 +51,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                     try {
                         String code = object.getString("connectionString");
                         tvCode.setText(code);
-                    }
-                    catch (JSONException e) {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -71,8 +69,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                     try {
                         String childID = object.getString("connect");
                         confirmChildScreen(); //Enable once child-side is completed
-                    }
-                    catch (JSONException e) {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }

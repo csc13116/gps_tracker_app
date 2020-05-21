@@ -139,7 +139,6 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
     public void onLogin(View view) {
-
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
         String url = "https://dacnpm-backend.herokuapp.com/auth/login";
         StringRequest login = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -184,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void goToRegister(View view){
+    public void goToRegister(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

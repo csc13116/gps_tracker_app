@@ -23,7 +23,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePageActivity extends FragmentActivity {
-
     BottomNavigationView bottomNavigationView;
     public static final int LAUNCH_MAP = 1;
 
@@ -34,7 +33,7 @@ public class HomePageActivity extends FragmentActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new LocationFragment()).commit();
         }
 
@@ -48,8 +47,7 @@ public class HomePageActivity extends FragmentActivity {
                             fragment = new LocationFragment();
                             getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                             break;
-                        }
-                        else {
+                        } else {
                             MapActivity mapActivityFragment = (MapActivity) getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.detach(mapActivityFragment);
@@ -59,15 +57,15 @@ public class HomePageActivity extends FragmentActivity {
                             break;
                         }
                     case R.id.navigation_message:
-                        fragment= new MessageFragment();
+                        fragment = new MessageFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_history:
-                        fragment= new HistoryFragment();
+                        fragment = new HistoryFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_account:
-                        fragment=new AccountFragment();
+                        fragment = new AccountFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                 }

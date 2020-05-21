@@ -30,11 +30,9 @@
 
         <activity android:name=".LoginActivity" />
 
-        <activity
-            android:name=".HomePageActivity"/>
+        <activity android:name=".HomePageActivity" />
 
-        <activity
-            android:name=".ChildHomePageActivity"/>
+        <activity android:name=".ChildHomePageActivity" />
 
         <activity android:name=".NameRelationshipActivity">
             <intent-filter>
@@ -62,12 +60,9 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
 
-        <activity
-            android:name=".ConfirmChildActivity">
-        </activity>
+        <activity android:name=".ConfirmChildActivity"></activity>
 
     </application>
 

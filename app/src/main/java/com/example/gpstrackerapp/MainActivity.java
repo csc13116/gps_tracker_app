@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void goToRegisterActivity(View v){
+    public void goToRegisterActivity(View v) {
         Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(mainIntent);
     }
 
-    public void goToEnterCode(View v){
+    public void goToEnterCode(View v) {
         Intent mainIntent = new Intent(MainActivity.this, EnterCodeActivity.class);
         startActivity(mainIntent);
     }

@@ -26,7 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.zip.InflaterOutputStream;
 
 public class NameRelationshipActivity extends AppCompatActivity {
-
     EditText parentRelationship;
     String childName, parentId;
     FirebaseAuth auth;

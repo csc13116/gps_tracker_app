@@ -1,4 +1,5 @@
 package com.example.gpstrackerapp;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,6 @@ import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
 import static java.security.AccessController.getContext;
 
 public class ConfirmChildActivity extends AppCompatActivity {
-
     EditText etNameChild;
     Button btnChildConfirm;
 
@@ -27,7 +27,7 @@ public class ConfirmChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_child);
 
-        etNameChild =  findViewById(R.id.et_childName);
+        etNameChild = findViewById(R.id.et_childName);
         btnChildConfirm = findViewById(R.id.btn_confirmChild);
 
         btnChildConfirm.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +39,5 @@ public class ConfirmChildActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

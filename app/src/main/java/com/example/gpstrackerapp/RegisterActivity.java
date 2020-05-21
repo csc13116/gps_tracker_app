@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-
     EditText email, password;
     TextView message;
     ProgressDialog dialog;
@@ -41,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.txt_password);
         message = (TextView) findViewById(R.id.txtV_msg);
 //      auth = FirebaseAuth.getInstance();
-
     }
 
     public void onRegister(View v) {
@@ -56,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
-                if(networkResponse!=null && networkResponse.data!=null){
+                if (networkResponse != null && networkResponse.data != null) {
                     message.setText(new String(networkResponse.data));
                 }
             }

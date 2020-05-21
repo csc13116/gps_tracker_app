@@ -15,7 +15,6 @@ import com.example.gpstrackerapp.ui.MessageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ChildHomePageActivity extends FragmentActivity {
-
     BottomNavigationView bottomNavigationView;
     public static final int LAUNCH_MAP = 1;
 
@@ -26,7 +25,7 @@ public class ChildHomePageActivity extends FragmentActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             MapActivity mapActivityFragment = new MapActivity();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment, mapActivityFragment);
@@ -40,28 +39,27 @@ public class ChildHomePageActivity extends FragmentActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
-                    case R.id.navigation_location:
-                        {
-                            MapActivity mapActivityFragment = new MapActivity();
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                            ft.add(R.id.fragment, mapActivityFragment);
-                            ft.detach(mapActivityFragment);
-                            ft.attach(mapActivityFragment);
-                            ft.commit();
+                    case R.id.navigation_location: {
+                        MapActivity mapActivityFragment = new MapActivity();
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.add(R.id.fragment, mapActivityFragment);
+                        ft.detach(mapActivityFragment);
+                        ft.attach(mapActivityFragment);
+                        ft.commit();
 
-                            getSupportFragmentManager().executePendingTransactions();
-                            break;
-                        }
+                        getSupportFragmentManager().executePendingTransactions();
+                        break;
+                    }
                     case R.id.navigation_message:
-                        fragment= new MessageFragment();
+                        fragment = new MessageFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_history:
-                        fragment= new HistoryFragment();
+                        fragment = new HistoryFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_account:
-                        fragment=new AccountFragment();
+                        fragment = new AccountFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                 }
@@ -71,5 +69,3 @@ public class ChildHomePageActivity extends FragmentActivity {
         });
     }
 }
-
-

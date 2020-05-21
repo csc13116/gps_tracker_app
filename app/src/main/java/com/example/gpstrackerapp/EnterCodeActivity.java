@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 
 public class EnterCodeActivity extends AppCompatActivity {
-
     private Socket mSocket;
     Pinview connectionCode;
     Button btnChildConnect;
@@ -59,8 +58,7 @@ public class EnterCodeActivity extends AppCompatActivity {
                     try {
                         String childID = object.getString("connect");
                         onBothPartiesConnect();
-                    }
-                    catch (JSONException e) {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }

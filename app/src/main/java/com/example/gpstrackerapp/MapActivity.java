@@ -27,13 +27,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MapActivity extends Fragment implements OnMapReadyCallback {
-
     private GoogleMap mMap;
 
     public double latitude;
     public double longitude;
     public String targetName;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,8 +48,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         if (bundle != null) {
             targetName = bundle.getString("CHILD_NAME_FOR_MAP");
             //Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             //Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
             targetName = "Bạn đang ở đây";
         }
@@ -60,7 +57,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         //setRetainInstance(true);
         return mView;
     }
-
 
     /**
      * Manipulates the map once available.
@@ -79,7 +75,8 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            latitude = Double.parseDouble(response.getString("latitude"));;
+                            latitude = Double.parseDouble(response.getString("latitude"));
+                            ;
                             longitude = Double.parseDouble(response.getString("longitude"));
 
                         } catch (JSONException e) {
