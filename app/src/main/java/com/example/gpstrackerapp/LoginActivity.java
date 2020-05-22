@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -19,16 +17,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email, password;
-    TextView message;
+    EditText mEmailEditText, mPasswordEditText;
+    TextView mMessageTextView;
     ProgressDialog dialog;
     String code;
 //    FirebaseUser user;
@@ -39,9 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email = (EditText) findViewById(R.id.txt_email);
-        password = (EditText) findViewById(R.id.txt_password);
-        message = (TextView) findViewById(R.id.txtV_msg);
+        mEmailEditText = (EditText) findViewById(R.id.editText_Email);
+        mPasswordEditText = (EditText) findViewById(R.id.editText_password);
+        mMessageTextView = (TextView) findViewById(R.id.textView_message);
 //      auth = FirebaseAuth.getInstance();
 
     }
@@ -162,15 +157,15 @@ public class LoginActivity extends AppCompatActivity {
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null && networkResponse.data != null) {
                     String jsonError = new String(networkResponse.data);
-                    message.setText(jsonError);
+                    mMessageTextView.setText(jsonError);
                 }
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", email.getText().toString().split("@")[0]);
-                params.put("password", password.getText().toString());
+                params.put("username", mEmailEditText.getText().toString().split("@")[0]);
+                params.put("password", mPasswordEditText.getText().toString());
                 return params;
             }
         };

@@ -1,18 +1,18 @@
 package com.example.gpstrackerapp;
 
 public class User {
+    public String mEmail;
+    public String mPassword;
+    public String mCode;
+    public String mId;
+
     public User() {
     }
 
     public User(String email, String password, String code, String id) {
-        this.email = email;
-        this.password = password;
-        this.code = code;
-        this.id = id;
+        this.mEmail = email;
+        this.mPassword = password;
+        this.mCode = code;
+        this.mId = id;
     }
-
-    public String email;
-    public String password;
-    public String code;
-    public String id;
 }

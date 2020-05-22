@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".ConfirmChildActivity">
 
     <LinearLayout
@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_childName"
+            android:id="@+id/textView_child_name"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -23,24 +23,23 @@
             android:textSize="25dp" />
 
         <EditText
-            android:id="@+id/et_childName"
+            android:id="@+id/editText_child_name"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:textAlignment="center"
             android:hint="Tên thiết bị"
-            />
+            android:textAlignment="center" />
 
         <Button
-            android:id="@+id/btn_confirmChild"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:layout_margin="20dp"
-            android:background="@drawable/button"
+            android:id="@+id/button_confirm_child"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xác nhận" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:text="Xác nhận"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

@@ -10,12 +10,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.gpstrackerapp.ui.AccountFragment;
 import com.example.gpstrackerapp.ui.HistoryFragment;
-import com.example.gpstrackerapp.ui.LocationFragment;
 import com.example.gpstrackerapp.ui.MessageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ChildHomePageActivity extends FragmentActivity {
-    BottomNavigationView bottomNavigationView;
+    BottomNavigationView mBottomNavigationView;
     public static final int LAUNCH_MAP = 1;
 
     @Override
@@ -23,7 +22,7 @@ public class ChildHomePageActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        mBottomNavigationView = findViewById(R.id.bottom_navigation);
 
         if (savedInstanceState == null) {
             MapActivity mapActivityFragment = new MapActivity();
@@ -34,7 +33,7 @@ public class ChildHomePageActivity extends FragmentActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;

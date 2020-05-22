@@ -1,29 +1,21 @@
 package com.example.gpstrackerapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.gpstrackerapp.ui.AccountFragment;
 import com.example.gpstrackerapp.ui.HistoryFragment;
 import com.example.gpstrackerapp.ui.LocationFragment;
 import com.example.gpstrackerapp.ui.MessageFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePageActivity extends FragmentActivity {
-    BottomNavigationView bottomNavigationView;
+    BottomNavigationView mBottomNavigationView;
     public static final int LAUNCH_MAP = 1;
 
     @Override
@@ -31,13 +23,13 @@ public class HomePageActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        mBottomNavigationView = findViewById(R.id.bottom_navigation);
 
         if (savedInstanceState == null) {
             HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new LocationFragment()).commit();
         }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = null;

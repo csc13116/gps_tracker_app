@@ -5,35 +5,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import com.example.gpstrackerapp.ui.LocationFragment;
-
-import java.util.Map;
 
 import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
-import static java.security.AccessController.getContext;
 
 public class ConfirmChildActivity extends AppCompatActivity {
-    EditText etNameChild;
-    Button btnChildConfirm;
+    EditText mChildNameEditText;
+    Button mChildConfirmButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_child);
 
-        etNameChild = findViewById(R.id.et_childName);
-        btnChildConfirm = findViewById(R.id.btn_confirmChild);
+        mChildNameEditText = findViewById(R.id.editText_child_name);
+        mChildConfirmButton = findViewById(R.id.button_confirm_child);
 
-        btnChildConfirm.setOnClickListener(new View.OnClickListener() {
+        mChildConfirmButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentToMap = new Intent();
-                intentToMap.putExtra("CHILD_NAME", etNameChild.getText().toString());
+                intentToMap.putExtra("CHILD_NAME", mChildNameEditText.getText().toString());
 
                 setResult(LAUNCH_MAP, intentToMap);
                 finish();

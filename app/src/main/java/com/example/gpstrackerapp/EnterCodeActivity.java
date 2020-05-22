@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -20,16 +19,16 @@ import java.net.URISyntaxException;
 
 public class EnterCodeActivity extends AppCompatActivity {
     private Socket mSocket;
-    Pinview connectionCode;
-    Button btnChildConnect;
+    Pinview mConnectionCode;
+    Button mConnectChildButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_code);
 
-        connectionCode = findViewById(R.id.pinView_code);
-        btnChildConnect = findViewById(R.id.btn_connect);
+        mConnectionCode = findViewById(R.id.pinView_code);
+        mConnectChildButton = findViewById(R.id.button_connect);
 
         try {
             mSocket = IO.socket("https://dacnpm-backend.herokuapp.com/connect");
@@ -38,9 +37,9 @@ public class EnterCodeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        btnChildConnect.setOnClickListener(new View.OnClickListener() {
+        mConnectChildButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String inputCode = connectionCode.getValue();
+                String inputCode = mConnectionCode.getValue();
                 mSocket.emit("child wait", inputCode);
             }
         });

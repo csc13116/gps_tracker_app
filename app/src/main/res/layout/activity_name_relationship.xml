@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView_msg1"
+        android:id="@+id/textView_message_1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -25,7 +25,7 @@
         android:textAlignment="center" />
 
     <EditText
-        android:id="@+id/txt_parentRelationship"
+        android:id="@+id/textView_parent_relationship"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -34,7 +34,7 @@
         android:hint="Tên hoặc quan hệ" />
 
     <Button
-        android:id="@+id/btn_connect"
+        android:id="@+id/button_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

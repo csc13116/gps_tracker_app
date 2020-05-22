@@ -6,13 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -27,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MapActivity extends Fragment implements OnMapReadyCallback {
-    private GoogleMap mMap;
+    private GoogleMap mGoogleMap;
 
     public double latitude;
     public double longitude;
@@ -76,7 +72,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
                     public void onResponse(JSONObject response) {
                         try {
                             latitude = Double.parseDouble(response.getString("latitude"));
-                            ;
                             longitude = Double.parseDouble(response.getString("longitude"));
 
                         } catch (JSONException e) {
@@ -96,15 +91,15 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        mGoogleMap = googleMap;
 
         //GET the location from server
         getRequestQueueForMap();
 
         // Add a marker in Sydney and move the camera
         LatLng trackingTarget = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
+        mGoogleMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
     }
 }

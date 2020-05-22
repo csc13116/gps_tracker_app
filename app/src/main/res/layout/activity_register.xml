@@ -7,20 +7,20 @@
     tools:context=".RegisterActivity">
 
     <ImageView
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         app:srcCompat="@drawable/parents_avatar" />
 
     <LinearLayout
-        android:layout_below="@id/imageView"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
 
         <EditText
@@ -35,61 +35,60 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/txt_email"
+            android:id="@+id/editText_Email"
             android:layout_width="280dp"
             android:layout_height="48dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/input_field"
             android:ems="10"
-            android:inputType="textPersonName"
             android:fontFamily="@font/roboto_light"
-            android:layout_marginBottom="10dp"
-            android:hint="Email" />
+            android:hint="Email"
+            android:inputType="textPersonName" />
 
         <EditText
-            android:background="@drawable/input_field"
-            android:id="@+id/txt_password"
+            android:id="@+id/editText_password"
             android:layout_width="280dp"
             android:layout_height="48dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:fontFamily="@font/roboto_light"
             android:layout_marginBottom="10dp"
-            android:hint="Mật khẩu" />
+            android:background="@drawable/input_field"
+            android:ems="10"
+            android:fontFamily="@font/roboto_light"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword" />
 
         <EditText
-            android:background="@drawable/input_field"
-            android:id="@+id/txt_passwordRep"
+            android:id="@+id/txt_password_repeat"
             android:layout_width="280dp"
             android:layout_height="48dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:fontFamily="@font/roboto_light"
             android:layout_marginBottom="10dp"
-            android:hint="Lặp lại mật khẩu" />
+            android:background="@drawable/input_field"
+            android:ems="10"
+            android:fontFamily="@font/roboto_light"
+            android:hint="Lặp lại mật khẩu"
+            android:inputType="textPassword" />
+
         <TextView
-            android:id="@+id/txtV_msg"
+            android:id="@+id/textView_message"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:textColor="@color/red"
             android:fontFamily="@font/roboto_light"
-            android:textSize="13dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:textSize="13dp" />
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/button_login"
             android:layout_width="130dp"
             android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@drawable/button"
             android:fontFamily="@font/roboto_medium"
+            android:onClick="onRegister"
             android:text="Đăng ký"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="18dp"
-            android:onClick="onRegister"
-            android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-
-
+            android:textSize="18dp" />
+    </LinearLayout>
 
 </RelativeLayout>

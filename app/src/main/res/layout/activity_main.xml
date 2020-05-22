@@ -8,7 +8,6 @@
     android:layout_gravity="center_vertical"
     tools:context=".MainActivity">
 
-
     <TextView
         android:id="@+id/TextView"
         android:layout_width="wrap_content"
@@ -29,14 +28,14 @@
         android:layout_marginRight="44dp">
 
         <ImageButton
-            android:id="@+id/btn_parents"
+            android:id="@+id/button_parent_selection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/parents_avatar"
             android:onClick="goToRegisterActivity" />
 
         <ImageButton
-            android:id="@+id/btn_children"
+            android:id="@+id/button_children_selection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/children_avatar"

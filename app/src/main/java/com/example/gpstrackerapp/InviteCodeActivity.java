@@ -19,14 +19,14 @@ import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
 
 public class InviteCodeActivity extends AppCompatActivity {
     private Socket mSocket;
-    TextView tvCode;
+    TextView mInvitationCodeView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_code);
 
-        tvCode = (TextView) findViewById(R.id.textView_code);
+        mInvitationCodeView = (TextView) findViewById(R.id.textView_code);
 
         try {
             mSocket = IO.socket("https://dacnpm-backend.herokuapp.com/connect");
@@ -50,7 +50,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                     JSONObject object = (JSONObject) args[0];
                     try {
                         String code = object.getString("connectionString");
-                        tvCode.setText(code);
+                        mInvitationCodeView.setText(code);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
