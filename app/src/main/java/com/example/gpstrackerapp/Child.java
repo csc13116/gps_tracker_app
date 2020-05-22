@@ -3,33 +3,33 @@ package com.example.gpstrackerapp;
 import java.util.Stack;
 
 public class Child {
+    public String mName;
+    public String mRelationship;
+    public Stack mLocations = new Stack<ChildLocation>();
+
     public Child() {
     }
 
-    public Child(String name) {
-        this.name = name;
+    public Child(String mName) {
+        this.mName = mName;
     }
 
     public Child(String name, String latitude, String longitude, String relationship) {
-        this.name = name;
-        this.locations.push(new location(longitude, latitude));
-        this.relationship = relationship;
+        this.mName = name;
+        this.mLocations.push(new ChildLocation(longitude, latitude));
+        this.mRelationship = relationship;
     }
 
-    public String name;
-    public String relationship;
-    public Stack locations = new Stack<location>();
+    public class ChildLocation {
+        public String mLongtitude;
+        public String mLatitude;
 
-    public class location {
-        public location() {
+        public ChildLocation() {
         }
 
-        public location(String longtitude, String latitude) {
-            this.latitude = latitude;
-            this.longtitude = longtitude;
+        public ChildLocation(String longtitude, String latitude) {
+            this.mLatitude = latitude;
+            this.mLongtitude = longtitude;
         }
-
-        public String longtitude;
-        public String latitude;
     }
 }
