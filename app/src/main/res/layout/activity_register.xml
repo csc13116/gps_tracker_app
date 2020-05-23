@@ -89,6 +89,7 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18dp" />
+
     </LinearLayout>
 
 </RelativeLayout>

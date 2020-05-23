@@ -51,36 +51,6 @@ public class NameRelationshipActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        Query childQuery = reference.orderByChild("name").equalTo(childName.toString()).limitToFirst(1);
-//
-//        childQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    DatabaseReference newRef = reference.child("Children").child(childName.toString()).child("relationship");
-//                    newRef.setValue(parentRelationship).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(task.isSuccessful()){
-//                                Toast.makeText(NameRelationshipActivity.this, "Succeed to add relationship", Toast.LENGTH_SHORT).show();
-//                            }else{
-//                                Toast.makeText(NameRelationshipActivity.this, "Fail to add relationship", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//                    for(DataSnapshot child : dataSnapshot.getChildren()){
-//                        newRef.setValue(parentRelationship).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if(task.isSuccessful()){
-//                                    Toast.makeText(getApplicationContext(), "Relationship added.", Toast.LENGTH_LONG).show();
-//                                }else{
-//                                    Toast.makeText(getApplicationContext(), "Fail to add Relationship.", Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
-//                    }
     }
 
 }

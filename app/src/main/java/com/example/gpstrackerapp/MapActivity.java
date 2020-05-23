@@ -43,9 +43,9 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
 
         if (bundle != null) {
             targetName = bundle.getString("CHILD_NAME_FOR_MAP");
-            //Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
+            // Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
         } else {
-            //Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
+            // Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
             targetName = "Bạn đang ở đây";
         }
 
@@ -53,16 +53,6 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         //setRetainInstance(true);
         return mView;
     }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
     public void getRequestQueueForMap() {
         String urlRequest = "https://dacnpm-backend.herokuapp.com/users/5e92c0641c9d44000027dae1/getchildrenping";
@@ -86,20 +76,19 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
                     }
                 }
         );
-
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
-        //GET the location from server
+        // GET the location from server
         getRequestQueueForMap();
 
         // Add a marker in Sydney and move the camera
         LatLng trackingTarget = new LatLng(latitude, longitude);
         mGoogleMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
+        // mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
     }
 }

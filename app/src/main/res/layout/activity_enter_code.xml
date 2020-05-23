@@ -41,15 +41,6 @@
             app:pinLength="6"
             app:pinWidth="40dp" />
 
-        <!--        <EditText-->
-        <!--            android:id="@+id/txt_childName"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginBottom="10dp"-->
-        <!--            android:inputType="textPersonName"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:hint="Tên thiết bị" />-->
-
         <Button
             android:id="@+id/button_connect"
             android:layout_width="wrap_content"

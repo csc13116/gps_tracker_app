@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    tools:context=".InviteCodeActivity"
-    >
+    tools:context=".InviteCodeActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,21 +20,21 @@
             android:layout_width="155dp"
             android:layout_height="155dp"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/successful_icon"
-            android:layout_margin="30dp"/>
+            android:layout_margin="30dp"
+            app:srcCompat="@drawable/successful_icon" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_margin="20dp"
-            android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
-            android:textSize="20dp"
+            android:layout_margin="20dp"
             android:fontFamily="@font/roboto_black"
             android:text="Mã kết nối của bạn"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/textView_msg"
@@ -43,10 +42,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
-            android:textSize="14dp"
             android:fontFamily="@font/roboto_light"
             android:text="Nhập mã này trên thiết bị của con"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/textView_code"
@@ -60,7 +59,6 @@
             android:textSize="50dp"
             android:textStyle="bold" />
 
-
-
     </LinearLayout>
+
 </RelativeLayout>

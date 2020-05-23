@@ -40,5 +40,7 @@
         android:layout_gravity="center_horizontal"
         android:text="Xác nhận"
         android:onClick="onConfirm"/>
+
     </LinearLayout>
+
 </RelativeLayout>
