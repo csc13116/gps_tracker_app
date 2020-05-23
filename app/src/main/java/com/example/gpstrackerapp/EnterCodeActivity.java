@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
+import static com.example.gpstrackerapp.config.BackendConnection.CONNECTION_URL;
+
 public class EnterCodeActivity extends AppCompatActivity {
     private Socket mSocket;
     Pinview mConnectionCode;
@@ -31,7 +33,7 @@ public class EnterCodeActivity extends AppCompatActivity {
         mConnectChildButton = findViewById(R.id.button_connect);
 
         try {
-            mSocket = IO.socket("https://dacnpm-backend.herokuapp.com/connect");
+            mSocket = IO.socket(CONNECTION_URL);
             mSocket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();

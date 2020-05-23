@@ -20,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.gpstrackerapp.config.BackendConnection.AUTHENTICATION_LOGIN_URL;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText mEmailEditText, mPasswordEditText;
@@ -135,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLogin(View view) {
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-        String url = "https://dacnpm-backend.herokuapp.com/auth/login";
+        String url = AUTHENTICATION_LOGIN_URL;
         StringRequest login = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

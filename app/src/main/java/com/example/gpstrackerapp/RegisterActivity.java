@@ -19,6 +19,8 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.gpstrackerapp.config.BackendConnection.AUTHENTICATION_REGISTRATION_URL;
+
 public class RegisterActivity extends AppCompatActivity {
     EditText mEmailEditText, mPasswordEditText;
     TextView mMessageTextView;
@@ -40,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onRegister(View v) {
         RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-        String url = "https://dacnpm-backend.herokuapp.com/auth/register";
+        String url = AUTHENTICATION_REGISTRATION_URL;
         StringRequest register = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
