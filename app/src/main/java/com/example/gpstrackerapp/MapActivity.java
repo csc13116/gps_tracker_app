@@ -1,12 +1,24 @@
 package com.example.gpstrackerapp;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -16,6 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,6 +39,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.channels.ScatteringByteChannel;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MapActivity extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -33,12 +50,21 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
     public double latitude;
     public double longitude;
     public String targetName;
+    private LatLng trackingTarget;
 
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
+    private final long MIN_TIME = 1000; //1 second
+    private final long MIN_DISTANCE = 3; //3 meters
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.activity_maps, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
 
         if (mapFragment == null) {
             getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
@@ -50,8 +76,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         if (bundle != null) {
             targetName = bundle.getString("CHILD_NAME_FOR_MAP");
             //Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             //Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
             targetName = "Bạn đang ở đây";
         }
@@ -72,42 +97,46 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
 
-    public void getRequestQueueForMap() {
-        String urlRequest = "https://dacnpm-backend.herokuapp.com/users/5e92c0641c9d44000027dae1/getchildrenping";
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, urlRequest, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            latitude = Double.parseDouble(response.getString("latitude"));;
-                            longitude = Double.parseDouble(response.getString("longitude"));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Can not get coordinates !", Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //GET the location from server
-        getRequestQueueForMap();
+        //GET the location
+        //getRequestQueueForMap();
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                // Add a marker & move camera
+                trackingTarget = new LatLng(location.getLatitude(), location.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 15)); //Zoom
+            }
 
-        // Add a marker in Sydney and move the camera
-        LatLng trackingTarget = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        try{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, locationListener);
+        }
+        catch (SecurityException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
