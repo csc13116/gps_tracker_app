@@ -1,45 +1,23 @@
 package com.example.gpstrackerapp;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.gpstrackerapp.ui.AccountFragment;
 import com.example.gpstrackerapp.ui.HistoryFragment;
 import com.example.gpstrackerapp.ui.LocationFragment;
 import com.example.gpstrackerapp.ui.MessageFragment;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ChildHomePageActivity extends FragmentActivity {
 
     BottomNavigationView bottomNavigationView;
+    public static final int LAUNCH_MAP = 1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
