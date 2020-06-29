@@ -3,6 +3,7 @@ package com.example.gpstrackerapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -70,7 +71,8 @@ public class InviteCodeActivity extends AppCompatActivity {
                     JSONObject object = (JSONObject) args[0];
                     try {
                         String childID = object.getString("connect");
-                        confirmChildScreen(); //Enable once child-side is completed
+                        //Toast.makeText(InviteCodeActivity.this, childID, Toast.LENGTH_LONG).show();
+                        confirmChildScreen(childID); //Enable once child-side is completed
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
@@ -80,8 +82,9 @@ public class InviteCodeActivity extends AppCompatActivity {
         }
     };
 
-    public void confirmChildScreen() {
+    public void confirmChildScreen(String childID) {
         Intent intent = new Intent(this, ConfirmChildActivity.class);
+        intent.putExtra("CHILD_ID", childID);
         startActivityForResult(intent, LAUNCH_MAP);
     }
 

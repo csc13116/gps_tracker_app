@@ -18,6 +18,7 @@ public class ChildHomePageActivity extends FragmentActivity {
 
     BottomNavigationView bottomNavigationView;
     public static final int LAUNCH_MAP = 1;
+    String childId;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -26,8 +27,13 @@ public class ChildHomePageActivity extends FragmentActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+        childId = getIntent().getStringExtra("CHILD_ID");
+        final Bundle bundleToFragment = new Bundle();
+        bundleToFragment.putString("CHILD_ID_FOR_MAP", childId);
+
         if(savedInstanceState == null){
             MapActivity mapActivityFragment = new MapActivity();
+            mapActivityFragment.setArguments(bundleToFragment);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment, mapActivityFragment);
             ft.commit();
@@ -41,8 +47,9 @@ public class ChildHomePageActivity extends FragmentActivity {
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_location:
-                        {
+                        if (getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") == null) {
                             MapActivity mapActivityFragment = new MapActivity();
+                            mapActivityFragment.setArguments(bundleToFragment);
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.add(R.id.fragment, mapActivityFragment);
                             ft.detach(mapActivityFragment);
@@ -50,6 +57,15 @@ public class ChildHomePageActivity extends FragmentActivity {
                             ft.commit();
 
                             getSupportFragmentManager().executePendingTransactions();
+                            break;
+                        }
+                        else {
+                            MapActivity mapActivityFragment = (MapActivity) getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.detach(mapActivityFragment);
+                            ft.attach(mapActivityFragment);
+                            ft.commit();
+
                             break;
                         }
                     case R.id.navigation_message:

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -58,7 +59,8 @@ public class EnterCodeActivity extends AppCompatActivity {
                     JSONObject object = (JSONObject) args[0];
                     try {
                         String childID = object.getString("connect");
-                        onBothPartiesConnect();
+                        //Toast.makeText(EnterCodeActivity.this, childID, Toast.LENGTH_LONG).show();
+                        onBothPartiesConnect(childID);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
@@ -68,8 +70,9 @@ public class EnterCodeActivity extends AppCompatActivity {
         }
     };
 
-    public void onBothPartiesConnect() {
+    public void onBothPartiesConnect(String childID) {
         Intent intent = new Intent(this, ChildHomePageActivity.class);
+        intent.putExtra("CHILD_ID", childID);
         startActivity(intent);
     }
 }

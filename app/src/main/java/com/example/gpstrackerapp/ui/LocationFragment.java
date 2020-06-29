@@ -17,6 +17,7 @@ import com.example.gpstrackerapp.ConfirmChildActivity;
 import com.example.gpstrackerapp.HomePageActivity;
 import com.example.gpstrackerapp.InviteCodeActivity;
 import com.example.gpstrackerapp.MapActivity;
+import com.example.gpstrackerapp.ParentMapActivity;
 import com.example.gpstrackerapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,6 +27,7 @@ import static com.example.gpstrackerapp.HomePageActivity.LAUNCH_MAP;
 public class LocationFragment extends Fragment {
     FloatingActionButton create_child_button;
     String childName;
+    String childId;
 
     @Nullable
     @Override
@@ -46,10 +48,12 @@ public class LocationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if ((data != null) && (requestCode == LAUNCH_MAP)) {
             childName = data.getStringExtra("CHILD_NAME");
+            childId = data.getStringExtra("CHILD_ID");
 
-            MapActivity mapActivityFragment = new MapActivity();
+            ParentMapActivity mapActivityFragment = new ParentMapActivity();
             Bundle bundleToFragment = new Bundle();
             bundleToFragment.putString("CHILD_NAME_FOR_MAP", childName);
+            bundleToFragment.putString("CHILD_ID_FOR_MAP", childId);
             mapActivityFragment.setArguments(bundleToFragment);
 
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();

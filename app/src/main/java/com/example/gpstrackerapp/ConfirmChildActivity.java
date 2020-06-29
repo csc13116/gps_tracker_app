@@ -22,6 +22,7 @@ public class ConfirmChildActivity extends AppCompatActivity {
 
     EditText etNameChild;
     Button btnChildConfirm;
+    String childID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,12 +31,13 @@ public class ConfirmChildActivity extends AppCompatActivity {
 
         etNameChild =  findViewById(R.id.et_childName);
         btnChildConfirm = findViewById(R.id.btn_confirmChild);
+        childID = getIntent().getStringExtra("CHILD_ID");
 
         btnChildConfirm.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentToMap = new Intent();
                 intentToMap.putExtra("CHILD_NAME", etNameChild.getText().toString());
-
+                intentToMap.putExtra("CHILD_ID", childID);
                 setResult(LAUNCH_MAP, intentToMap);
                 finish();
             }

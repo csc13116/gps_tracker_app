@@ -23,11 +23,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,6 +42,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.channels.ScatteringByteChannel;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,21 +54,30 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
     public double latitude;
     public double longitude;
     public String targetName;
+    public String childID;
     private LatLng trackingTarget;
+    boolean isPermissionAsked = false;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    private final long MIN_TIME = 1000; //1 second
+    private final long MIN_TIME = 10000; //1000 = 1 second
     private final long MIN_DISTANCE = 3; //3 meters
+
+    Handler handler = new Handler();
+    Runnable runnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.activity_maps, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
-        getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
-        getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        if (isPermissionAsked == false)
+        {
+            getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+            getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+            isPermissionAsked = true;
+        }
 
         if (mapFragment == null) {
             getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
@@ -75,6 +88,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
 
         if (bundle != null) {
             targetName = bundle.getString("CHILD_NAME_FOR_MAP");
+            childID = bundle.getString("CHILD_ID_FOR_MAP");
             //Toast.makeText(getActivity(), targetName, Toast.LENGTH_LONG).show();
         } else {
             //Toast.makeText(getActivity(), "Không lấy được tên !", Toast.LENGTH_LONG).show();
@@ -86,16 +100,55 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         return mView;
     }
 
+    private void getLocationForMap()
+    {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+        String url = "https://dacnpm-backend.herokuapp.com/children/ping";
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("latitude", String.valueOf(latitude));
+            jsonBody.put("longitude", String.valueOf(longitude));
+            jsonBody.put("id", childID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            requestQueue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, 10000);
+                //GET the location
+                onMapReady(mMap);
+                getLocationForMap();
+            }
+        }, 10000);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable); //stop handler when activity not visible super.onPause();
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -105,12 +158,47 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         //getRequestQueueForMap();
         locationListener = new LocationListener() {
             @Override
-            public void onLocationChanged(Location location) {
+            public void onLocationChanged(final Location location) {
                 // Add a marker & move camera
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
                 trackingTarget = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 15)); //Zoom
+
+                String urlPost = "https://dacnpm-backend.herokuapp.com/children/ping";
+
+
+
+                /*
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlPost, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        String latitude = String.valueOf(location.getLatitude());
+                        String longitude = String.valueOf(location.getLongitude());
+                        params.put("latitude", latitude);
+                        params.put("longitude", longitude);
+                        params.put("children", childID);
+                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+                        return params;
+                    }
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                requestQueue.add(stringRequest);
+                 */
             }
 
             @Override
