@@ -59,8 +59,9 @@ public class EnterCodeActivity extends AppCompatActivity {
                     JSONObject object = (JSONObject) args[0];
                     try {
                         String childID = object.getString("connect");
-                        //Toast.makeText(EnterCodeActivity.this, childID, Toast.LENGTH_LONG).show();
-                        onBothPartiesConnect(childID);
+                        String phoneNumber = object.getString("phoneNumber");
+                        //Toast.makeText(EnterCodeActivity.this, phoneNumber, Toast.LENGTH_LONG).show();
+                        onBothPartiesConnect(childID, phoneNumber);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
@@ -70,9 +71,10 @@ public class EnterCodeActivity extends AppCompatActivity {
         }
     };
 
-    public void onBothPartiesConnect(String childID) {
+    public void onBothPartiesConnect(String childID, String phoneNumber) {
         Intent intent = new Intent(this, ChildHomePageActivity.class);
         intent.putExtra("CHILD_ID", childID);
+        intent.putExtra("PHONE_NUMBER", phoneNumber);
         startActivity(intent);
     }
 }

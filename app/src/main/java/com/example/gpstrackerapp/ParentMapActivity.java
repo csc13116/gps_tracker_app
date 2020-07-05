@@ -88,7 +88,7 @@ public class ParentMapActivity extends Fragment implements OnMapReadyCallback {
                     try {
                         latitude = Double.parseDouble(response.getString("latitude"));
                         longitude = Double.parseDouble(response.getString("longitude"));
-                        Toast.makeText(getActivity(), childID, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(), childID, Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -129,6 +129,7 @@ public class ParentMapActivity extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         if (latitude != 0 && longitude != 0)
         {
+            mMap.clear();
             trackingTarget = new LatLng(latitude, longitude);
             mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));

@@ -26,6 +26,7 @@ public class HomePageActivity extends FragmentActivity {
 
     BottomNavigationView bottomNavigationView;
     public static final int LAUNCH_MAP = 1;
+    String childId;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -33,6 +34,10 @@ public class HomePageActivity extends FragmentActivity {
         setContentView(R.layout.activity_home_page);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        childId = getIntent().getStringExtra("CHILD_ID");
+        final Bundle bundleToFragment = new Bundle();
+        bundleToFragment.putString("CHILD_ID_FOR_MAP", childId);
 
         if(savedInstanceState == null){
             HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new LocationFragment()).commit();
@@ -50,7 +55,7 @@ public class HomePageActivity extends FragmentActivity {
                             break;
                         }
                         else {
-                            MapActivity mapActivityFragment = (MapActivity) getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
+                            ParentMapActivity mapActivityFragment = (ParentMapActivity) getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT");
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.detach(mapActivityFragment);
                             ft.attach(mapActivityFragment);
@@ -63,9 +68,28 @@ public class HomePageActivity extends FragmentActivity {
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_history:
-                        fragment= new HistoryFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
-                        break;
+                        if (getSupportFragmentManager().findFragmentByTag("HISTORY_MAP_FRAGMENT") == null) {
+                            HistoryMapActivity historyMapActivityFragment = new HistoryMapActivity();
+                            historyMapActivityFragment.setArguments(bundleToFragment);
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.add(R.id.fragment, historyMapActivityFragment, "HISTORY_MAP_FRAGMENT");
+                            ft.addToBackStack("HISTORY_MAP_FRAGMENT");
+                            ft.detach(historyMapActivityFragment);
+                            ft.attach(historyMapActivityFragment);
+                            ft.commit();
+
+                            getSupportFragmentManager().executePendingTransactions();
+                            break;
+                        }
+                        else {
+                            HistoryMapActivity historyMapActivityFragment = (HistoryMapActivity) getSupportFragmentManager().findFragmentByTag("HISTORY_MAP_FRAGMENT");
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.detach(historyMapActivityFragment);
+                            ft.attach(historyMapActivityFragment);
+                            ft.commit();
+
+                            break;
+                        }
                     case R.id.navigation_account:
                         fragment=new AccountFragment();
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();

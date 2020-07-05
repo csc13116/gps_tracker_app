@@ -132,6 +132,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         }
     }
 
+
     public void onResume() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
@@ -150,6 +151,7 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
         handler.removeCallbacks(runnable); //stop handler when activity not visible super.onPause();
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -160,16 +162,13 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
             @Override
             public void onLocationChanged(final Location location) {
                 // Add a marker & move camera
+                mMap.clear();
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 trackingTarget = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 15)); //Zoom
-
-                String urlPost = "https://dacnpm-backend.herokuapp.com/children/ping";
-
-
 
                 /*
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlPost, new Response.Listener<String>() {
