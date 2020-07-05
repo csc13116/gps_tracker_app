@@ -49,6 +49,12 @@ public class HomePageActivity extends FragmentActivity {
                 Fragment fragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_location:
+                        if (getSupportFragmentManager().findFragmentByTag("HISTORY_MAP_FRAGMENT") != null)
+                        {
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.detach(getSupportFragmentManager().findFragmentByTag("HISTORY_MAP_FRAGMENT"));
+                        }
+
                         if (getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") == null) {
                             fragment = new LocationFragment();
                             getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
@@ -68,6 +74,12 @@ public class HomePageActivity extends FragmentActivity {
                         getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                         break;
                     case R.id.navigation_history:
+                        if (getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") != null)
+                        {
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.detach(getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT"));
+                        }
+                        
                         if (getSupportFragmentManager().findFragmentByTag("HISTORY_MAP_FRAGMENT") == null) {
                             HistoryMapActivity historyMapActivityFragment = new HistoryMapActivity();
                             historyMapActivityFragment.setArguments(bundleToFragment);

@@ -62,12 +62,7 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
-            targetName = bundle.getString("CHILD_NAME_FOR_MAP");
             childID = bundle.getString("CHILD_ID_FOR_MAP");
-        }
-        else
-        {
-            targetName = "Bạn đang ở đây";
         }
 
         mapFragment.getMapAsync(this);
@@ -81,60 +76,15 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
 
         String url = "https://dacnpm-backend.herokuapp.com/children/" + childID + "/pings";
 
-        /*
-        try {
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray jArr = response.getJSONArray("savedPosition");
-                        for (int i = 0; i < jArr.length() - 1; i++)
-                        {
-                            JSONObject jObj = jArr.getJSONObject(i);
-                            latitude = Double.parseDouble(jObj.getString("latitude"));
-                            longitude = Double.parseDouble(jObj.getString("longitude"));
-                            for(int j = 1; j < jArr.length(); j++)
-                            {
-                                JSONObject jObj1 = jArr.getJSONObject(j);
-                                latitude1 = Double.parseDouble(jObj1.getString("latitude"));
-                                longitude1 = Double.parseDouble(jObj1.getString("longitude"));
-
-                                //Draw line
-                                mMap.addPolyline(new PolylineOptions()
-                                        .add(new LatLng(latitude, longitude), new LatLng(latitude1, longitude1))
-                                        .width(1)
-                                        .color(Color.RED));;
-                            }
-                        }
-                        JSONObject jObjFinal = jArr.getJSONObject(jArr.length());
-                        finalLat = Double.parseDouble(jObjFinal.getString("latitude"));
-                        finalLong = Double.parseDouble(jObjFinal.getString("longitude"));
-                        onMapReady(mMap);
-                        //Toast.makeText(getActivity(), childID, Toast.LENGTH_LONG).show();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-            requestQueue.add(jsonObjectRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-         */
-
         try {
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        Toast.makeText(getActivity(), (CharSequence) response, Toast.LENGTH_LONG).show();
                         JSONArray jArr = new JSONArray(response);
+
+                        Toast.makeText(getActivity(), (CharSequence) jArr, Toast.LENGTH_LONG).show();
+
                         for (int i = 0; i < jArr.length() - 1; i++)
                         {
                             JSONObject jObj = jArr.getJSONObject(i);
