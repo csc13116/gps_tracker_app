@@ -57,9 +57,11 @@ public class InviteCodeActivity extends AppCompatActivity {
             this.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, PackageManager.PERMISSION_GRANTED);
             this.requestPermissions(new String[]{Manifest.permission.READ_SMS}, PackageManager.PERMISSION_GRANTED);
         }
-
-        tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        getNumber = tMgr.getLine1Number();
+        else
+        {
+            tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            getNumber = tMgr.getLine1Number();
+        }
 
         JSONObject jsonBody = new JSONObject();
         try {
@@ -69,7 +71,7 @@ public class InviteCodeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        mSocket.emit("parent wait",jsonBody); //Fixed ID for testing: 5e932814d26d1d1d9c5cd034, otherwise, change to userId
+        mSocket.emit("parent wait", jsonBody); //Fixed ID for testing: 5e932814d26d1d1d9c5cd034, otherwise, change to userId
         mSocket.on("wait connect", onWaitConnect);
 
         mSocket.on("child connect", onChildConnect);

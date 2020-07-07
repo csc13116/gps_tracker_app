@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -30,21 +32,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
+    /*
     public double latitude;
     public double longitude;
-    public double latitude1;
-    public double longitude1;
     public double finalLat;
     public double finalLong;
+
+     */
+
     public String targetName;
-    public String childID;
-    private LatLng trackingTarget;
-    ArrayList<LatLng> locationArrayList = new ArrayList<>();
+    public String childId;
+    public Marker markerName;
+    private List<Marker> allMarkers = new ArrayList<>();
 
     Handler handler = new Handler();
     Runnable runnable;
@@ -58,15 +63,18 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
             getFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
         }
 
+        getLocationForMap();
 
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
-            childID = bundle.getString("CHILD_ID_FOR_MAP");
+            childId = bundle.getString("CHILD_ID_FOR_MAP");
         }
 
         mapFragment.getMapAsync(this);
         //setRetainInstance(true);
+
+
         return mView;
     }
 
@@ -74,43 +82,55 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
     {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
-        String url = "https://dacnpm-backend.herokuapp.com/children/" + childID + "/pings";
+        String url = "https://dacnpm-backend.herokuapp.com/children/" + childId + "/pings";
+        //Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
 
         try {
-            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+            JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray jArr = new JSONArray(response);
-
-                        Toast.makeText(getActivity(), (CharSequence) jArr, Toast.LENGTH_LONG).show();
-
-                        for (int i = 0; i < jArr.length() - 1; i++)
-                        {
-                            JSONObject jObj = jArr.getJSONObject(i);
-                            latitude = Double.parseDouble(jObj.getString("latitude"));
-                            longitude = Double.parseDouble(jObj.getString("longitude"));
-                            for(int j = 1; j < jArr.length(); j++)
+                public void onResponse(JSONArray response) {
+                    for (int i = 0; i < response.length(); i++)
+                    {
+                        try {
+                            if (response.getJSONObject(i) != null)
                             {
-                                JSONObject jObj1 = jArr.getJSONObject(j);
-                                latitude1 = Double.parseDouble(jObj1.getString("latitude"));
-                                longitude1 = Double.parseDouble(jObj1.getString("longitude"));
+                                try {
+                                    JSONObject jObj = response.getJSONObject(i);
+                                    if (jObj.getString("latitude") != null && jObj.getString("longitude") != null)
+                                    {
 
-                                //Draw line
-                                mMap.addPolyline(new PolylineOptions()
-                                        .add(new LatLng(latitude, longitude), new LatLng(latitude1, longitude1))
-                                        .width(1)
-                                        .color(Color.RED));;
+                                        double latitude = Double.parseDouble(response.getJSONObject(i-1).getString("latitude"));
+                                        double longitude = Double.parseDouble(response.getJSONObject(i-1).getString("longitude"));
+                                        double finalLat = Double.parseDouble(response.getJSONObject(i).getString("latitude"));
+                                        double finalLong = Double.parseDouble(response.getJSONObject(i).getString("longitude"));
+
+                                        //Draw line
+                                        mMap.addPolyline(new PolylineOptions()
+                                                .add(new LatLng(latitude, longitude), new LatLng(finalLat, finalLong))
+                                                .width(3)
+                                                .color(Color.GREEN));
+                                        //onMapReady(mMap);
+
+                                        double xLat = Double.parseDouble(response.getJSONObject(0).getString("latitude"));
+                                        double xLong = Double.parseDouble(response.getJSONObject(0).getString("longitude"));
+                                        markerOnMap(mMap, xLat, xLong);
+
+                                    }
+                                    else
+                                    {
+                                        onResume();
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                        JSONObject jObjFinal = jArr.getJSONObject(jArr.length());
-                        finalLat = Double.parseDouble(jObjFinal.getString("latitude"));
-                        finalLong = Double.parseDouble(jObjFinal.getString("longitude"));
-                        onMapReady(mMap);
-                        //Toast.makeText(getActivity(), childID, Toast.LENGTH_LONG).show();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }
             }, new Response.ErrorListener() {
@@ -119,19 +139,19 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
                     error.printStackTrace();
                 }
             });
-            requestQueue.add(jsonObjectRequest);
+
+            requestQueue.add(jsonRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /*
     public void onResume() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
                 handler.postDelayed(runnable, 5000);
                 //GET the location
-                getLocationForMap();
-                onMapReady(mMap);
             }
         }, 5000);
         super.onResume();
@@ -142,18 +162,52 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
         super.onPause();
         handler.removeCallbacks(runnable); //stop handler when activity not visible super.onPause();
     }
+    */
+
+    private void removeMarkers() {
+        for (Marker marker: allMarkers)
+        {
+            marker.remove();
+        }
+        allMarkers.clear();
+    }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+        /*
         if (finalLat != 0 && finalLong != 0)
         {
-            trackingTarget = new LatLng(finalLat, finalLong);
-            mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
+            LatLng trackingTarget = new LatLng(finalLat, finalLong);
+            MarkerOptions mLocationMarker = new MarkerOptions().position(trackingTarget).title(targetName);
+
+            if (allMarkers.size() != 0)
+            {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
+                allMarkers.clear();
+            }
+            markerName = mMap.addMarker(mLocationMarker);
+            allMarkers.add(markerName);
+
+
+            //mMap.addMarker(mLocationMarker);
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 15)); //Zoom
         }
 
+
+         */
+    }
+
+    private void markerOnMap(GoogleMap googleMap, double mlat, double mlong) {
+        mMap = googleMap;
+        LatLng trackingTarget = new LatLng(mlat, mlong);
+        MarkerOptions mLocationMarker = new MarkerOptions().position(trackingTarget).title(targetName);
+        removeMarkers();
+        markerName = mMap.addMarker(mLocationMarker);
+        allMarkers.add(markerName);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
     }
 }

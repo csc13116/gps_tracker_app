@@ -79,7 +79,7 @@ public class HomePageActivity extends FragmentActivity {
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.detach(getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT"));
                         }
-                        
+
                         if (getSupportFragmentManager().findFragmentByTag("HISTORY_MAP_FRAGMENT") == null) {
                             HistoryMapActivity historyMapActivityFragment = new HistoryMapActivity();
                             historyMapActivityFragment.setArguments(bundleToFragment);
