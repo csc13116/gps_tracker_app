@@ -27,6 +27,7 @@ public class HomePageActivity extends FragmentActivity {
     BottomNavigationView bottomNavigationView;
     public static final int LAUNCH_MAP = 1;
     String childId;
+    String userId;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -36,12 +37,21 @@ public class HomePageActivity extends FragmentActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         childId = getIntent().getStringExtra("CHILD_ID");
+        userId = getIntent().getStringExtra("USER_ID");
+
         final Bundle bundleToFragment = new Bundle();
         bundleToFragment.putString("CHILD_ID_FOR_MAP", childId);
 
+        final Bundle bundleToServerFragment = new Bundle();
+        bundleToServerFragment.putString("USER_ID_FOR_SERVER", userId);
+
+
         if(savedInstanceState == null){
-            HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new LocationFragment()).commit();
+            Fragment fragment = new LocationFragment();
+            fragment.setArguments(bundleToServerFragment);
+            HomePageActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
         }
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -57,6 +67,7 @@ public class HomePageActivity extends FragmentActivity {
 
                         if (getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") == null) {
                             fragment = new LocationFragment();
+                            fragment.setArguments(bundleToServerFragment);
                             getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
                             break;
                         }

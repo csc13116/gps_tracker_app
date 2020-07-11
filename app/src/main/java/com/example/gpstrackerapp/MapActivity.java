@@ -64,6 +64,8 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
     private final long MIN_TIME = 10000; //1000 = 1 second
     private final long MIN_DISTANCE = 3; //3 meters
 
+    boolean isZoomed = false;
+
     Handler handler = new Handler();
     Runnable runnable;
 
@@ -168,36 +170,15 @@ public class MapActivity extends Fragment implements OnMapReadyCallback {
                 trackingTarget = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 15)); //Zoom
-
-                /*
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlPost, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        String latitude = String.valueOf(location.getLatitude());
-                        String longitude = String.valueOf(location.getLongitude());
-                        params.put("latitude", latitude);
-                        params.put("longitude", longitude);
-                        params.put("children", childID);
-                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
-                        return params;
-                    }
-                };
-
-                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                requestQueue.add(stringRequest);
-                 */
+                if (isZoomed == false)
+                {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
+                    isZoomed = true;
+                }
+                else
+                {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget)); //Zoom
+                }
             }
 
             @Override

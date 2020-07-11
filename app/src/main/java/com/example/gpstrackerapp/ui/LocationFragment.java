@@ -29,16 +29,25 @@ public class LocationFragment extends Fragment {
     FloatingActionButton create_child_button;
     String childName;
     String childId;
+    String userId;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_location, container, false);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null)
+        {
+            userId = getArguments().getString("USER_ID_FOR_SERVER");
+        }
+
         create_child_button = (FloatingActionButton) fragment.findViewById(R.id.create_child_button);
         create_child_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inviteCode = new Intent(getContext(), InviteCodeActivity.class);
+                inviteCode.putExtra("USER_ID_FOR_SERVER", userId);
                 startActivityForResult(inviteCode, LAUNCH_MAP);
             }
         });

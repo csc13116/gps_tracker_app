@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView message;
     ProgressDialog dialog;
     String code;
+    String userId;
 //    FirebaseUser user;
 //    DatabaseReference reference;
 //    FirebaseAuth auth;
@@ -146,16 +147,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
+                JSONObject res = null;
+                try {
+                    res = new JSONObject(response);
+                    userId = res.getString("token");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 Intent homepage = new Intent(LoginActivity.this, HomePageActivity.class);
+                homepage.putExtra("USER_ID", userId);
                 startActivity(homepage);
-//                JSONObject res = null;
-//                try {
-//                    res = new JSONObject(response);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                String msg = res.optString("mesage");
-//                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+                //String msg = res.optString("mesage");
+                //Toast.makeText(LoginActivity.this, userId, Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override

@@ -47,6 +47,7 @@ public class ParentMapActivity extends Fragment implements OnMapReadyCallback {
     public String targetName;
     public String childID;
     private LatLng trackingTarget;
+    boolean isZoomed = false;
 
     Handler handler = new Handler();
     Runnable runnable;
@@ -133,7 +134,15 @@ public class ParentMapActivity extends Fragment implements OnMapReadyCallback {
             trackingTarget = new LatLng(latitude, longitude);
             mMap.addMarker(new MarkerOptions().position(trackingTarget).title(targetName));
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 15)); //Zoom
+            if (isZoomed == false)
+            {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
+                isZoomed = true;
+            }
+            else
+            {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget)); //Zoom
+            }
         }
 
     }

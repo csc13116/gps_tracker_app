@@ -30,6 +30,7 @@ public class InviteCodeActivity extends AppCompatActivity {
     TextView tvCode;
     TelephonyManager tMgr;
     String getNumber;
+    String userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class InviteCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_invite_code);
 
         tvCode = (TextView) findViewById(R.id.textView_code);
+        userId = getIntent().getStringExtra("USER_ID_FOR_SERVER");
 
         try {
             mSocket = IO.socket("https://dacnpm-backend.herokuapp.com/connect");
@@ -65,7 +67,7 @@ public class InviteCodeActivity extends AppCompatActivity {
 
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("userId", "5e932814d26d1d1d9c5cd034");
+            jsonBody.put("userId", userId);
             jsonBody.put("phoneNumber", getNumber);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -50,6 +50,7 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
     public String childId;
     public Marker markerName;
     private List<Marker> allMarkers = new ArrayList<>();
+    boolean isZoomed = false;
 
     Handler handler = new Handler();
     Runnable runnable;
@@ -146,12 +147,13 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    /*
+
     public void onResume() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
                 handler.postDelayed(runnable, 5000);
                 //GET the location
+                getLocationForMap();
             }
         }, 5000);
         super.onResume();
@@ -162,7 +164,7 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
         super.onPause();
         handler.removeCallbacks(runnable); //stop handler when activity not visible super.onPause();
     }
-    */
+
 
     private void removeMarkers() {
         for (Marker marker: allMarkers)
@@ -176,29 +178,7 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         mMap = googleMap;
-        /*
-        if (finalLat != 0 && finalLong != 0)
-        {
-            LatLng trackingTarget = new LatLng(finalLat, finalLong);
-            MarkerOptions mLocationMarker = new MarkerOptions().position(trackingTarget).title(targetName);
-
-            if (allMarkers.size() != 0)
-            {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
-                allMarkers.clear();
-            }
-            markerName = mMap.addMarker(mLocationMarker);
-            allMarkers.add(markerName);
-
-
-            //mMap.addMarker(mLocationMarker);
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget));
-        }
-
-
-         */
     }
 
     private void markerOnMap(GoogleMap googleMap, double mlat, double mlong) {
@@ -208,6 +188,14 @@ public class HistoryMapActivity extends Fragment implements OnMapReadyCallback {
         removeMarkers();
         markerName = mMap.addMarker(mLocationMarker);
         allMarkers.add(markerName);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
+        if (isZoomed == false)
+        {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trackingTarget, 16)); //Zoom
+            isZoomed = true;
+        }
+        else
+        {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(trackingTarget)); //Zoom
+        }
     }
 }
