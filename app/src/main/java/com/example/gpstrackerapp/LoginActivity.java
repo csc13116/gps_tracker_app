@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject res = null;
                 try {
                     res = new JSONObject(response);
-                    userId = res.getString("token");
+                    userId = res.getString("userId");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
