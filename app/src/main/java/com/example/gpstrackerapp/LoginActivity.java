@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog dialog;
     String code;
     String userId;
+    String userToken;
 //    FirebaseUser user;
 //    DatabaseReference reference;
 //    FirebaseAuth auth;
@@ -45,6 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         message = (TextView) findViewById(R.id.txtV_msg);
 //      auth = FirebaseAuth.getInstance();
 
+        /*
+        if (getSharedPreferences("userToken", MODE_PRIVATE).edit().putString("userToken", userToken) != null)
+        {
+            SharedPreferences prefs = getSharedPreferences("userToken", MODE_PRIVATE);
+            userToken = prefs.getString("userToken", null); // will return 0 if no  value is saved
+        }
+         */
     }
 
 //    public void onRegister(View v) {
@@ -151,6 +160,17 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     res = new JSONObject(response);
                     userId = res.getString("userId");
+                    if (userToken == null)
+                    {
+                        userToken = res.getString("token");
+                        /*
+                        SharedPreferences.Editor editor = getSharedPreferences("userToken", MODE_PRIVATE).edit();
+                        editor.putString("userToken", userToken);
+                        editor.commit();
+
+                         */
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

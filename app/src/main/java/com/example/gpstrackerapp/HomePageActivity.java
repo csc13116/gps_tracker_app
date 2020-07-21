@@ -32,7 +32,7 @@ public class HomePageActivity extends FragmentActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_parent_home_page);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -80,10 +80,6 @@ public class HomePageActivity extends FragmentActivity {
 
                             break;
                         }
-                    case R.id.navigation_message:
-                        fragment= new MessageFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
-                        break;
                     case R.id.navigation_history:
                         if (getSupportFragmentManager().findFragmentByTag("MAP_ACTIVITY_FRAGMENT") != null)
                         {
@@ -113,10 +109,6 @@ public class HomePageActivity extends FragmentActivity {
 
                             break;
                         }
-                    case R.id.navigation_account:
-                        fragment=new AccountFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
-                        break;
                 }
 
                 return true;

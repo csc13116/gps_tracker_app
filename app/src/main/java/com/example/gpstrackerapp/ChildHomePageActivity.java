@@ -138,10 +138,6 @@ public class ChildHomePageActivity extends FragmentActivity {
 
                             break;
                         }
-                    case R.id.navigation_account:
-                        fragment=new AccountFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
-                        break;
                 }
 
                 return true;
